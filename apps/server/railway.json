@@ -1,0 +1,9 @@
+{
+  "$schema": "https://railway.com/railway.schema.json",
+  "build": {
+    "buildCommand": "npm install && npm run build --workspace=@journaling/shared && npm run build --workspace=@journaling/server && npx prisma migrate deploy --schema apps/server/prisma/schema.prisma"
+  },
+  "deploy": {
+    "startCommand": "npm run start --workspace=@journaling/server"
+  }
+}
