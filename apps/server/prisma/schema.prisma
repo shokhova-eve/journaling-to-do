@@ -1,0 +1,95 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model JournalEntry {
+  id        String   @id @default(uuid())
+  entryDate DateTime @unique @db.Date
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  widgets JournalWidget[]
+
+  @@map("journal_entries")
+}
+
+enum WidgetType {
+  WEATHER
+  TODO_MINI
+  PROMPT
+  IMAGE
+}
+
+model JournalWidget {
+  id             String       @id @default(uuid())
+  journalEntryId String
+  journalEntry   JournalEntry @relation(fields: [journalEntryId], references: [id], onDelete: Cascade)
+
+  type      WidgetType
+  position  Int
+  payload   Json     @default("{}")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tasks Task[]
+
+  @@index([journalEntryId])
+  @@map("journal_widgets")
+}
+
+model TodoTile {
+  id         String    @id @default(uuid())
+  title      String
+  position   Int
+  archivedAt DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  tasks Task[]
+
+  @@index([archivedAt])
+  @@map("todo_tiles")
+}
+
+model Task {
+  id String @id @default(uuid())
+
+  todoTileId String?
+  todoTile   TodoTile? @relation(fields: [todoTileId], references: [id], onDelete: Cascade)
+
+  journalWidgetId String?
+  journalWidget   JournalWidget? @relation(fields: [journalWidgetId], references: [id], onDelete: Cascade)
+
+  parentTaskId String?
+  parentTask   Task?   @relation("Subtasks", fields: [parentTaskId], references: [id], onDelete: Cascade)
+  subtasks     Task[]  @relation("Subtasks")
+
+  text           String
+  completed      Boolean   @default(false)
+  completionDate DateTime? @db.Date
+  position       Int
+
+  recurrenceKey String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([todoTileId])
+  @@index([journalWidgetId])
+  @@index([parentTaskId])
+  @@index([recurrenceKey])
+  @@map("tasks")
+}
+
+model ToolboxNote {
+  id        String   @id @default(uuid())
+  content   String   @default("")
+  updatedAt DateTime @updatedAt
+
+  @@map("toolbox_note")
+}

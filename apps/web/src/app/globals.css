@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+@theme {
+  --color-paper: #faf6ee;
+  --color-paper-dotted: #e4d9c4;
+  --color-ink: #3f372c;
+  --color-ink-soft: #756b5a;
+  --color-accent: #c98f5e;
+  --color-accent-soft: #f0ddc4;
+  --color-surface: #ffffff;
+  --color-border: #e8e0d1;
+  --font-sans: var(--font-body);
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+}
+
+.dotted-grid {
+  background-color: var(--color-paper);
+  background-image: radial-gradient(circle, var(--color-paper-dotted) 1px, transparent 1px);
+  background-size: 24px 24px;
+}

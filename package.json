@@ -1,0 +1,23 @@
+{
+  "name": "journaling-app",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "bash scripts/dev.sh",
+    "dev:web": "npm run dev --workspace=@journaling/web",
+    "dev:server": "npm run dev --workspace=@journaling/server",
+    "build": "npm run build --workspace=@journaling/shared && npm run build --workspace=@journaling/server && npm run build --workspace=@journaling/web",
+    "test": "npm test --workspace=@journaling/server"
+  },
+  "allowScripts": {
+    "@prisma/client@5.22.0": true,
+    "@prisma/engines@5.22.0": true,
+    "prisma@5.22.0": true,
+    "unrs-resolver@1.12.2": true,
+    "esbuild@0.28.2": true,
+    "esbuild@0.21.5": true
+  }
+}
