@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { apiClient } from "@/lib/apiClient";
@@ -18,12 +18,9 @@ const STORAGE_KEY = "sidebar-collapsed";
 export function Sidebar() {
   const pathname = usePathname();
   const router = useRouter();
-  const [collapsed, setCollapsed] = useState(false);
-
-  useEffect(() => {
-    const stored = window.localStorage.getItem(STORAGE_KEY);
-    if (stored) setCollapsed(stored === "1");
-  }, []);
+  const [collapsed, setCollapsed] = useState(
+    () => window.localStorage.getItem(STORAGE_KEY) === "1"
+  );
 
   function toggleCollapsed() {
     setCollapsed((prev) => {

@@ -3,6 +3,8 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import { env } from "./env";
 import { authRouter } from "./routes/auth";
+import { journalRouter } from "./routes/journal";
+import { requireAuth } from "./middleware/auth";
 import { errorHandler } from "./middleware/errorHandler";
 
 export function createApp() {
@@ -22,6 +24,7 @@ export function createApp() {
   });
 
   app.use("/api", authRouter);
+  app.use("/api", requireAuth, journalRouter);
 
   app.use(errorHandler);
 

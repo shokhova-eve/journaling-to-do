@@ -1,0 +1,6 @@
+[
+  { "id": "plant", "filename": "plant.svg", "label": "Plant" },
+  { "id": "moon", "filename": "moon.svg", "label": "Moonlit sky" },
+  { "id": "mountains", "filename": "mountains.svg", "label": "Mountains" },
+  { "id": "coffee", "filename": "coffee.svg", "label": "Coffee" }
+]

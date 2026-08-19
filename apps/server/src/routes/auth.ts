@@ -5,6 +5,7 @@ import { z } from "zod";
 import { env } from "../env";
 import { verifyPassword } from "../lib/password";
 import { requireAuth } from "../middleware/auth";
+import { asyncHandler } from "../lib/asyncHandler";
 
 export const authRouter = Router();
 
@@ -19,7 +20,7 @@ const loginSchema = z.object({
   password: z.string().min(1),
 });
 
-authRouter.post("/login", loginLimiter, async (req, res) => {
+authRouter.post("/login", loginLimiter, asyncHandler(async (req, res) => {
   const parsed = loginSchema.safeParse(req.body);
   if (!parsed.success) {
     res.status(400).json({ error: "Password is required" });
@@ -50,7 +51,7 @@ authRouter.post("/login", loginLimiter, async (req, res) => {
   });
 
   res.json({ authenticated: true });
-});
+}));
 
 authRouter.post("/logout", (_req, res) => {
   res.clearCookie(env.COOKIE_NAME, { sameSite: "none", secure: true });

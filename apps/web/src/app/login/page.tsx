@@ -38,7 +38,7 @@ export default function LoginPage() {
       >
         <h1 className="text-xl font-semibold text-ink">Welcome back</h1>
         <p className="mt-1 text-sm text-ink-soft">
-          Glad you're here. Enter your password to open your journal.
+          {"Glad you're here. Enter your password to open your journal."}
         </p>
 
         <label htmlFor="password" className="mt-6 block text-sm font-medium text-ink">
