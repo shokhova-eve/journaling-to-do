@@ -24,9 +24,16 @@ export function InlineEditableText({
 
   useEffect(() => {
     if (!editing) return;
-    const el = multiline ? textareaRef.current : inputRef.current;
-    el?.focus();
-    el?.select();
+    if (multiline) {
+      // Place the cursor at the end instead of selecting everything, so
+      // resuming a longer entry doesn't wipe it out on the next keystroke.
+      const el = textareaRef.current;
+      el?.focus();
+      el?.setSelectionRange(el.value.length, el.value.length);
+    } else {
+      inputRef.current?.focus();
+      inputRef.current?.select();
+    }
   }, [editing, multiline]);
 
   function startEditing() {
